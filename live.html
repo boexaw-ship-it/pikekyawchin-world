@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Streamers | PikeKyawChin World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+Myanmar:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #F0A500;
+      --gold-light: #FFD060;
+      --gold-dark: #B87800;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --dark2: #1A1A1A;
+      --dark3: #222222;
+      --white: #FFFFFF;
+      --gray: #888888;
+      --red-live: #FF3B3B;
+      --yt-red: #FF0000;
+      --fb-blue: #1877F2;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Rajdhani', 'Noto Sans Myanmar', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(240,165,0,0.2);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .nav-logo-text .eng { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--white); letter-spacing: 1px; }
+    .nav-logo-text .eng span { color: var(--gold); }
+    .nav-logo-text .myan { font-family: 'Noto Sans Myanmar', sans-serif; font-size: 11px; color: var(--gold); }
+
+    .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; }
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); background: rgba(240,165,0,0.08); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--gold); border-radius: 2px; }
+
+    /* HERO */
+    .hero {
+      margin-top: 64px;
+      background: linear-gradient(135deg, #0A0A0A 0%, #1A0500 50%, #0A0A0A 100%);
+      position: relative;
+      padding: 48px 24px 40px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 60% 50%, rgba(255,59,59,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(240,165,0,0.06) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,59,59,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,59,59,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,59,59,0.1);
+      border: 1px solid rgba(255,59,59,0.3);
+      color: var(--red-live);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      animation: pulse-live 1.5s infinite;
+    }
+
+    @keyframes pulse-live {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 6vw, 64px);
+      color: var(--white);
+      line-height: 0.95;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 span { color: var(--red-live); }
+
+    .hero-sub {
+      font-family: 'Noto Sans Myanmar', sans-serif;
+      font-size: 15px;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .stat-icon { font-size: 18px; }
+    .stat-info { display: flex; flex-direction: column; line-height: 1.2; }
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--gold); }
+    .stat-label { font-size: 11px; color: var(--gray); font-family: 'Noto Sans Myanmar', sans-serif; }
+
+    /* MAIN */
+    .main-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+
+    /* FILTER TABS */
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--gray);
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Rajdhani', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn:hover { border-color: rgba(240,165,0,0.3); color: var(--white); }
+    .tab-btn.active { background: rgba(240,165,0,0.1); border-color: var(--gold); color: var(--gold); }
+    .tab-btn.yt-tab.active { background: rgba(255,0,0,0.1); border-color: var(--yt-red); color: var(--yt-red); }
+    .tab-btn.fb-tab.active { background: rgba(24,119,242,0.1); border-color: var(--fb-blue); color: var(--fb-blue); }
+
+    /* SECTION */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px; height: 26px;
+      border-radius: 2px;
+    }
+
+    .section-title.yt::before { background: var(--yt-red); }
+    .section-title.fb::before { background: var(--fb-blue); }
+
+    .streamer-count {
+      background: rgba(255,255,255,0.06);
+      color: var(--gray);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
+    /* STREAMER GRID */
+    .streamers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .streamer-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all 0.3s;
+      animation: fadeInUp 0.4s ease both;
+    }
+
+    .streamer-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .streamer-card.is-live {
+      border-color: rgba(255,59,59,0.3);
+      box-shadow: 0 0 20px rgba(255,59,59,0.08);
+    }
+
+    .streamer-card.yt-card:hover { border-color: rgba(255,0,0,0.3); }
+    .streamer-card.fb-card:hover { border-color: rgba(24,119,242,0.3); }
+
+    /* Card Banner */
+    .card-banner {
+      height: 80px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px 16px;
+    }
+
+    .card-banner.yt-banner {
+      background: linear-gradient(135deg, #1a0000, #2d0000);
+    }
+
+    .card-banner.fb-banner {
+      background: linear-gradient(135deg, #001a3a, #002d5a);
+    }
+
+    .platform-watermark {
+      position: absolute;
+      right: 16px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 36px;
+      opacity: 0.15;
+    }
+
+    .live-indicator {
+      position: absolute;
+      top: 12px; left: 16px;
+      background: var(--red-live);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      animation: pulse-live 1.5s infinite;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .offline-indicator {
+      position: absolute;
+      top: 12px; left: 16px;
+      background: rgba(136,136,136,0.2);
+      color: var(--gray);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+
+    /* Avatar */
+    .card-avatar-wrap {
+      position: absolute;
+      bottom: -24px; left: 16px;
+    }
+
+    .card-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 3px solid var(--dark2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: var(--dark3);
+      position: relative;
+    }
+
+    .card-avatar.yt-av { border-color: var(--yt-red); }
+    .card-avatar.fb-av { border-color: var(--fb-blue); }
+
+    .platform-badge {
+      position: absolute;
+      bottom: -4px; right: -4px;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      border: 2px solid var(--dark2);
+    }
+
+    .platform-badge.yt { background: var(--yt-red); }
+    .platform-badge.fb { background: var(--fb-blue); }
+
+    /* Card Body */
+    .card-body {
+      padding: 32px 16px 16px;
+    }
+
+    .streamer-name {
+      font-family: 'Noto Sans Myanmar', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .streamer-handle {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 10px;
+    }
+
+    .streamer-desc {
+      font-family: 'Noto Sans Myanmar', sans-serif;
+      font-size: 12px;
+      color: rgba(136,136,136,0.8);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      min-height: 36px;
+    }
+
+    /* Viewer count */
+    .viewer-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .viewer-count {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      color: var(--red-live);
+    }
+
+    .viewer-label {
+      font-size: 11px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Card Buttons */
+    .card-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-live-watch {
+      flex: 1;
+      background: var(--red-live);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      font-family: 'Rajdhani', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .btn-live-watch:hover { background: #E02020; transform: scale(1.02); }
+
+    .btn-channel {
+      flex: 1;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--gray);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      font-family: 'Rajdhani', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .btn-channel.yt:hover { border-color: var(--yt-red); color: var(--yt-red); }
+    .btn-channel.fb:hover { border-color: var(--fb-blue); color: var(--fb-blue); }
+
+    .btn-channel-only {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      font-family: 'Rajdhani', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .btn-channel-only.yt {
+      background: rgba(255,0,0,0.1);
+      border: 1px solid rgba(255,0,0,0.3);
+      color: var(--yt-red);
+    }
+
+    .btn-channel-only.yt:hover { background: rgba(255,0,0,0.2); }
+
+    .btn-channel-only.fb {
+      background: rgba(24,119,242,0.1);
+      border: 1px solid rgba(24,119,242,0.3);
+      color: var(--fb-blue);
+    }
+
+    .btn-channel-only.fb:hover { background: rgba(24,119,242,0.2); }
+
+    /* DIVIDER */
+    .section-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 8px 0 32px;
+    }
+
+    /* NOTE BOX */
+    .note-box {
+      background: rgba(240,165,0,0.06);
+      border: 1px solid rgba(240,165,0,0.2);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .note-icon { font-size: 20px; flex-shrink: 0; }
+
+    .note-text {
+      font-family: 'Noto Sans Myanmar', sans-serif;
+      font-size: 13px;
+      color: rgba(240,165,0,0.8);
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--white); letter-spacing: 2px; margin-bottom: 8px; }
+    .footer-logo span { color: var(--gold); }
+    .footer-myan { font-family: 'Noto Sans Myanmar', sans-serif; font-size: 13px; color: var(--gray); margin-bottom: 12px; }
+    .footer-copy { font-size: 12px; color: rgba(136,136,136,0.5); }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .streamer-card:nth-child(1) { animation-delay: 0.05s; }
+    .streamer-card:nth-child(2) { animation-delay: 0.1s; }
+    .streamer-card:nth-child(3) { animation-delay: 0.15s; }
+    .streamer-card:nth-child(4) { animation-delay: 0.2s; }
+    .streamer-card:nth-child(5) { animation-delay: 0.25s; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .streamers-grid { grid-template-columns: 1fr; }
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        background: rgba(10,10,10,0.98);
+        flex-direction: column;
+        padding: 16px;
+        border-bottom: 1px solid rgba(240,165,0,0.2);
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-bar { gap: 10px; }
+      .stat-item { padding: 6px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div style="width:44px;height:44px;background:linear-gradient(135deg,#B87800,#F0A500);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;">🏐</div>
+      <div class="nav-logo-text">
+        <span class="eng">Pike<span>Kyaw</span>Chin</span>
+        <span class="myan">ပိုက်ကျော်ခြင်း ကမ္ဘာ</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">ပွဲစာရင်း</a></li>
+      <li><a href="live.html" class="active">🔴 LIVE</a></li>
+      <li><a href="members.html">Members</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="live-dot" style="background:var(--red-live);width:8px;height:8px;border-radius:50%;display:inline-block;"></span>
+        LIVE STREAMERS
+      </div>
+      <h1>LIVE <span>STREAM</span><br>CHANNELS</h1>
+      <p class="hero-sub">ပိုက်ကျော်ခြင်း ပွဲများ တိုက်ရိုက်ထုတ်လွှင့်သော Streamer များ</p>
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-icon">🔴</span>
+          <div class="stat-info">
+            <span class="stat-num" id="liveNow">0</span>
+            <span class="stat-label">Live ဖြစ်နေ</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">▶</span>
+          <div class="stat-info">
+            <span class="stat-num">3</span>
+            <span class="stat-label">YouTube</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">f</span>
+          <div class="stat-info">
+            <span class="stat-num">7</span>
+            <span class="stat-label">Facebook</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">📡</span>
+          <div class="stat-info">
+            <span class="stat-num">10</span>
+            <span class="stat-label">Streamer စုစုပေါင်း</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-wrap">
+
+    <!-- NOTE -->
+    <div class="note-box">
+      <span class="note-icon">💡</span>
+      <div class="note-text">
+        Streamer များ Live ဖြစ်နေသောအချိန်တွင် <strong>"LIVE ကြည့်"</strong> ခလုတ် ပေါ်လာပါမည်။
+        Live မဟုတ်သောအချိန်တွင် Channel/Page သို့ သွားရောက် Follow/Subscribe လုပ်နိုင်ပါသည်။
+        Live link များကို Admin မှ ထည့်သွင်းပေးပါမည်။
+      </div>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="filterStreamers('all', this)">🎙 အားလုံး (10)</button>
+      <button class="tab-btn yt-tab" onclick="filterStreamers('youtube', this)">▶ YouTube (3)</button>
+      <button class="tab-btn fb-tab" onclick="filterStreamers('facebook', this)">f Facebook (7)</button>
+      <button class="tab-btn" onclick="filterStreamers('live', this)">🔴 Live ဖြစ်နေ</button>
+    </div>
+
+    <!-- YOUTUBE SECTION -->
+    <div id="ytSection">
+      <div class="section-header">
+        <h2 class="section-title yt">▶ YouTube Streamers</h2>
+        <span class="streamer-count">3 ယောက်</span>
+      </div>
+      <hr class="section-divider"/>
+
+      <div class="streamers-grid" id="ytGrid">
+
+        <!-- YT 1 - LIVE -->
+        <div class="streamer-card yt-card is-live" data-platform="youtube" data-live="true">
+          <div class="card-banner yt-banner">
+            <div class="platform-watermark">▶</div>
+            <div class="live-indicator"><span class="live-dot"></span> LIVE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar yt-av">
+                🎙
+                <div class="platform-badge yt">▶</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">PKC Official Channel</div>
+            <div class="streamer-handle">@pkcofficial</div>
+            <div class="streamer-desc">ပိုက်ကျော်ခြင်း ကမ္ဘာ တရားဝင် YouTube Channel · ပွဲများ တိုက်ရိုက်ထုတ်လွှင့်</div>
+            <div class="viewer-row">
+              <span class="viewer-count">1,240</span>
+              <span class="viewer-label">ကြည့်နေ</span>
+            </div>
+            <div class="card-btns">
+              <a href="YOUR_YOUTUBE_LIVE_LINK_1" target="_blank" class="btn-live-watch">▶ LIVE ကြည့်</a>
+              <a href="YOUR_YOUTUBE_CHANNEL_LINK_1" target="_blank" class="btn-channel yt">Channel</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- YT 2 - Offline -->
+        <div class="streamer-card yt-card" data-platform="youtube" data-live="false">
+          <div class="card-banner yt-banner">
+            <div class="platform-watermark">▶</div>
+            <div class="offline-indicator">OFFLINE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar yt-av">
+                📹
+                <div class="platform-badge yt">▶</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">Ko Zaw YouTube</div>
+            <div class="streamer-handle">@kozawyoutube</div>
+            <div class="streamer-desc">ပွဲ Highlight များ နှင့် တိုက်ရိုက်ထုတ်လွှင့်မှုများ ပါဝင်သော Channel</div>
+            <div class="card-btns">
+              <a href="YOUR_YOUTUBE_CHANNEL_LINK_2" target="_blank" class="btn-channel-only yt">▶ Channel ကြည့် / Subscribe</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- YT 3 - Offline -->
+        <div class="streamer-card yt-card" data-platform="youtube" data-live="false">
+          <div class="card-banner yt-banner">
+            <div class="platform-watermark">▶</div>
+            <div class="offline-indicator">OFFLINE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar yt-av">
+                🎬
+                <div class="platform-badge yt">▶</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">PKC Sports TV</div>
+            <div class="streamer-handle">@pkcsportstv</div>
+            <div class="streamer-desc">ပိုက်ကျော်ခြင်း ပွဲများ Analysis နှင့် မှတ်တမ်း ဗီဒီယိုများ</div>
+            <div class="card-btns">
+              <a href="YOUR_YOUTUBE_CHANNEL_LINK_3" target="_blank" class="btn-channel-only yt">▶ Channel ကြည့် / Subscribe</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FACEBOOK SECTION -->
+    <div id="fbSection">
+      <div class="section-header">
+        <h2 class="section-title fb">f Facebook Streamers</h2>
+        <span class="streamer-count">7 ယောက်</span>
+      </div>
+      <hr class="section-divider"/>
+
+      <div class="streamers-grid" id="fbGrid">
+
+        <!-- FB 1 - LIVE -->
+        <div class="streamer-card fb-card is-live" data-platform="facebook" data-live="true">
+          <div class="card-banner fb-banner">
+            <div class="platform-watermark">f</div>
+            <div class="live-indicator"><span class="live-dot"></span> LIVE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar fb-av">
+                📡
+                <div class="platform-badge fb">f</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">PKC Live Facebook</div>
+            <div class="streamer-handle">PKC World Official</div>
+            <div class="streamer-desc">တရားဝင် Facebook Page · ပွဲများ Live ထုတ်လွှင့်</div>
+            <div class="viewer-row">
+              <span class="viewer-count">856</span>
+              <span class="viewer-label">ကြည့်နေ</span>
+            </div>
+            <div class="card-btns">
+              <a href="YOUR_FACEBOOK_LIVE_LINK_1" target="_blank" class="btn-live-watch">▶ LIVE ကြည့်</a>
+              <a href="YOUR_FACEBOOK_PAGE_LINK_1" target="_blank" class="btn-channel fb">Page</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FB 2 - Offline -->
+        <div class="streamer-card fb-card" data-platform="facebook" data-live="false">
+          <div class="card-banner fb-banner">
+            <div class="platform-watermark">f</div>
+            <div class="offline-indicator">OFFLINE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar fb-av">
+                🎙
+                <div class="platform-badge fb">f</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">Ko Aung Stream</div>
+            <div class="streamer-handle">Ko Aung PKC</div>
+            <div class="streamer-desc">ပိုက်ကျော်ခြင်း ပွဲများ Live ထုတ်လွှင့်သော Facebook Page</div>
+            <div class="card-btns">
+              <a href="YOUR_FACEBOOK_PAGE_LINK_2" target="_blank" class="btn-channel-only fb">f Page ကြည့် / Follow</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FB 3 - Offline -->
+        <div class="streamer-card fb-card" data-platform="facebook" data-live="false">
+          <div class="card-banner fb-banner">
+            <div class="platform-watermark">f</div>
+            <div class="offline-indicator">OFFLINE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar fb-av">
+                📹
+                <div class="platform-badge fb">f</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">Ma Cho Live</div>
+            <div class="streamer-handle">Ma Cho PKC Stream</div>
+            <div class="streamer-desc">ပွဲ Commentary နှင့် တိုက်ရိုက်ထုတ်လွှင့်</div>
+            <div class="card-btns">
+              <a href="YOUR_FACEBOOK_PAGE_LINK_3" target="_blank" class="btn-channel-only fb">f Page ကြည့် / Follow</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FB 4 - Offline -->
+        <div class="streamer-card fb-card" data-platform="facebook" data-live="false">
+          <div class="card-banner fb-banner">
+            <div class="platform-watermark">f</div>
+            <div class="offline-indicator">OFFLINE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar fb-av">
+                🎬
+                <div class="platform-badge fb">f</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">Ko Kyaw Stream</div>
+            <div class="streamer-handle">Ko Kyaw PKC</div>
+            <div class="streamer-desc">ပိုက်ကျော်ခြင်း ပွဲများ တိုက်ရိုက် မှတ်တမ်းတင်</div>
+            <div class="card-btns">
+              <a href="YOUR_FACEBOOK_PAGE_LINK_4" target="_blank" class="btn-channel-only fb">f Page ကြည့် / Follow</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FB 5 - Offline -->
+        <div class="streamer-card fb-card" data-platform="facebook" data-live="false">
+          <div class="card-banner fb-banner">
+            <div class="platform-watermark">f</div>
+            <div class="offline-indicator">OFFLINE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar fb-av">
+                🌟
+                <div class="platform-badge fb">f</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">PKC Mandalay Live</div>
+            <div class="streamer-handle">PKC Mandalay</div>
+            <div class="streamer-desc">မန္တလေး ဒေသ ပွဲများ အဓိက တိုက်ရိုက်ထုတ်လွှင့်</div>
+            <div class="card-btns">
+              <a href="YOUR_FACEBOOK_PAGE_LINK_5" target="_blank" class="btn-channel-only fb">f Page ကြည့် / Follow</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FB 6 - Offline -->
+        <div class="streamer-card fb-card" data-platform="facebook" data-live="false">
+          <div class="card-banner fb-banner">
+            <div class="platform-watermark">f</div>
+            <div class="offline-indicator">OFFLINE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar fb-av">
+                ⚡
+                <div class="platform-badge fb">f</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">Ko Min Stream</div>
+            <div class="streamer-handle">Ko Min PKC Live</div>
+            <div class="streamer-desc">ပွဲ တိုက်ရိုက်ထုတ်လွှင့် နှင့် ပွဲနောက် Analysis</div>
+            <div class="card-btns">
+              <a href="YOUR_FACEBOOK_PAGE_LINK_6" target="_blank" class="btn-channel-only fb">f Page ကြည့် / Follow</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FB 7 - Offline -->
+        <div class="streamer-card fb-card" data-platform="facebook" data-live="false">
+          <div class="card-banner fb-banner">
+            <div class="platform-watermark">f</div>
+            <div class="offline-indicator">OFFLINE</div>
+            <div class="card-avatar-wrap">
+              <div class="card-avatar fb-av">
+                🔥
+                <div class="platform-badge fb">f</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="streamer-name">PKC Yangon Live</div>
+            <div class="streamer-handle">PKC Yangon</div>
+            <div class="streamer-desc">ရန်ကုန် ဒေသ ပွဲများ တိုက်ရိုက်ထုတ်လွှင့်</div>
+            <div class="card-btns">
+              <a href="YOUR_FACEBOOK_PAGE_LINK_7" target="_blank" class="btn-channel-only fb">f Page ကြည့် / Follow</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Pike<span>Kyaw</span>Chin World</div>
+    <div class="footer-myan">ပိုက်ကျော်ခြင်း ကမ္ဘာ</div>
+    <div class="footer-copy">© 2026 PikeKyawChin World. All rights reserved.</div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    // Count live streamers
+    const liveCards = document.querySelectorAll('[data-live="true"]');
+    document.getElementById('liveNow').textContent = liveCards.length;
+
+    // Filter
+    function filterStreamers(type, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const allCards = document.querySelectorAll('.streamer-card');
+      const ytSection = document.getElementById('ytSection');
+      const fbSection = document.getElementById('fbSection');
+
+      if (type === 'all') {
+        allCards.forEach(c => c.style.display = '');
+        ytSection.style.display = '';
+        fbSection.style.display = '';
+      } else if (type === 'youtube') {
+        ytSection.style.display = '';
+        fbSection.style.display = 'none';
+        allCards.forEach(c => {
+          c.style.display = c.dataset.platform === 'youtube' ? '' : 'none';
+        });
+      } else if (type === 'facebook') {
+        ytSection.style.display = 'none';
+        fbSection.style.display = '';
+        allCards.forEach(c => {
+          c.style.display = c.dataset.platform === 'facebook' ? '' : 'none';
+        });
+      } else if (type === 'live') {
+        ytSection.style.display = '';
+        fbSection.style.display = '';
+        allCards.forEach(c => {
+          c.style.display = c.dataset.live === 'true' ? '' : 'none';
+        });
+      }
+    }
+
+    // NOTE: Admin မှ Live link များ Firebase Firestore မှ load လုပ်ပြီး
+    // href attribute များကို dynamic ထည့်သွင်းနိုင်ပါမည်
+    // is-live class နှင့် live indicator များကို Firebase data အပေါ်မူတည်ပြပါမည်
+  </script>
+
+</body>
+</html>
